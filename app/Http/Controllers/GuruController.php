@@ -61,10 +61,9 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function show(Guru $guru)
+    public function show($id)
     {
-        //
-        return Guru::where()->first();
+        return Guru::where($id, 'id')->first();
     }
 
     /**
@@ -73,10 +72,9 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function edit(Guru $guru)
+    public function edit($id)
     {
-        //
-        return Guru::where()->first();
+        return Guru::where('id', $id)->first();
     }
 
     /**
@@ -86,9 +84,25 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Guru $guru)
+    public function update(Request $request, $id)
     {
-        //
+        $guru = Guru::where($id,'id');
+        $guru->user_id = $request->user_id;
+        $guru->niy = $request->niy;
+        $guru->nomor_handphone = $request->nomor_handphone;
+        $guru->tempat_lahir = $request->tempat_lahir;
+        $guru->tanggal_lahir = $request->tanggal_lahir;
+        $guru->status = $request->status;
+        $guru->jumlah_anak = $request->jumlah_anak;
+        $guru->nama_suami = $request->nama_suami;
+        $guru->nama_istri = $request->nama_istri;
+        $guru->tanggal_masuk = $request->tanggal_masuk;
+        $guru->tanggal_keluar = $request->tanggal_keluar;
+        if($guru->save()){
+            return ["status" => "Berhasil update Data"];
+        }else{
+            return["status"=>"Gagal update Data"];
+        }        
     }
 
     /**

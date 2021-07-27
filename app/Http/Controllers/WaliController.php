@@ -14,8 +14,8 @@ class WaliController extends Controller
      */
     public function index()
     {
-        //
-        return Wali::all();
+
+     return Wali::all();
 
     }
 
@@ -60,9 +60,9 @@ class WaliController extends Controller
      * @param  \App\Models\Wali  $wali
      * @return \Illuminate\Http\Response
      */
-    public function show(Wali $wali)
+    public function show($id)
     {
-        //
+        return Wali::where('id', $id)->first();
     }
 
     /**
@@ -71,9 +71,9 @@ class WaliController extends Controller
      * @param  \App\Models\Wali  $wali
      * @return \Illuminate\Http\Response
      */
-    public function edit(Wali $wali)
+    public function edit($id)
     {
-        //
+        return Wali::where('id', $id)->first();
     }
 
     /**
@@ -83,9 +83,22 @@ class WaliController extends Controller
      * @param  \App\Models\Wali  $wali
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wali $wali)
+    public function update(Request $request, $id)
     {
-        //
+        $wali = Wali::where('id', $id)->first();
+        $wali->user_id = $request->user_id;
+        $wali->nama = $request->nama;
+        $wali->pekerjaan = $request->pekerjaan;
+        $wali->penghasilan = $request->penghasilan;
+        $wali->status = $request->status;
+        $wali->jumlah_anak = $request->jumlah_anak;
+        $wali->siswa_id = $request->siswa_id;
+        $wali->alamat = $request->alamat;
+        if($wali->save()){
+            return ["status" => "Berhasil Update Data"];
+        }else{
+            return["status"=>"Gagal Update Data"];
+        }     
     }
 
     /**

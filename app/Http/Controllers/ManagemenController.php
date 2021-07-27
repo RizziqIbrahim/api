@@ -51,9 +51,9 @@ class ManagemenController extends Controller
      * @param  \App\Models\Managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function show(Managemen $managemen)
+    public function show($id)
     {
-        //
+        return Managemen::where('id', $id)->first();
     }
 
     /**
@@ -62,9 +62,9 @@ class ManagemenController extends Controller
      * @param  \App\Models\Managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Managemen $managemen)
+    public function edit($id)
     {
-        //
+        return Managemen::where('id', $id)->first();
     }
 
     /**
@@ -74,9 +74,19 @@ class ManagemenController extends Controller
      * @param  \App\Models\Managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Managemen $managemen)
+    public function update(Request $request, $id)
     {
-        //
+        $users = Managemen::where($id, 'id');
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->password = $request->password;
+        $users->role = $request->role;
+        $users->status = $request->status;
+        if($users->save()){
+            return["status"=>"Berhasil update Data"];
+        }else{
+            return["status"=>"gagal update Data"];
+        }
     }
 
     /**

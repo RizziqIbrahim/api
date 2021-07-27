@@ -61,9 +61,9 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Siswa $siswa)
+    public function show($id)
     {
-        //
+        return Siswa::where('id', $id)->first();
     }
 
     /**
@@ -72,9 +72,9 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $siswa)
+    public function edit($id)
     {
-        //
+        return Siswa::where('id', $id)->first();
     }
 
     /**
@@ -84,9 +84,26 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, $id)
     {
-        //
+        $siswa = Siswa::where($id, 'id');
+        $siswa->user_id = $request->user_id;
+        $siswa->nisn = $request->nisn;
+        $siswa->tempat_lahir = $request->tempat_lahir;
+        $siswa->tanggal_lahir = $request->tanggal_lahir;
+        $siswa->sekolah_asal = $request->sekolah_asal;
+        $siswa->nama_ayah = $request->nama_ayah;
+        $siswa->nama_ibu = $request->nama_ibu;
+        $siswa->nama_wali = $request->nama_wali;
+        $siswa->tahun_masuk = $request->tahun_masuk;
+        $siswa->tahun_keluar = $request->tahun_keluar;
+        $siswa->alasan_keluar = $request->alasan_keluar;
+        $siswa->status = $request->status;
+        if($siswa->save()){
+            return["status"=>"Berhasil Update Data"];
+        }else{
+            return["status"=>"gagal Update Data"];
+        }
     }
 
     /**

@@ -9,4 +9,9 @@ class Managemen extends Model
 {
     protected $table = "users";
     protected $fillable = ["nama", "email", "password", "role", "status"];
+
+    public function siswa()
+    {
+        return $this->hasOne("\App\Models\Siswa");
+    }
 }
